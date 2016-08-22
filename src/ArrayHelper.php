@@ -47,6 +47,31 @@ class ArrayHelper implements \ArrayAccess, \Iterator
     }
 
     /**
+     * clear an array of any empty elements
+     *
+     * @param   array   Array to clear
+     * @return ArrayHelper $this
+     */
+    public function clearArray()
+    {
+        $Helper = new ArrayHelper([]);
+
+        foreach ($this->array as $key => $value) {
+            if (is_array($value)) {
+                $this->array[$key] = $Helper->help($value)
+                    ->clearArray()
+                    ->output();
+            } else {
+                if (empty($value)) {
+                    unset($this->array[$key]);
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    /**
      * take an array and split into the given number of arrays with equal number of elements
      * if an uneven number of elements one (or more) arrays may have more elements then the others
      *
@@ -60,14 +85,13 @@ class ArrayHelper implements \ArrayAccess, \Iterator
         if (count($this->array) < $sections) {
             $chunkSize = 1;
         } else {
-            $chunkSize = (count($this->array) / $sections);
+            $chunkSize = ceil(count($this->array) / $sections);
         }
 
         $this->array = array_chunk($this->array, $chunkSize, true);
 
         return $this;
     }
-
 
     /**
      * Add new elements to the given array after the element with the supplied key
@@ -119,6 +143,41 @@ class ArrayHelper implements \ArrayAccess, \Iterator
         unset($this->array[$key]);
 
         $this->addAfter($moveAfter, $moveItem);
+
+        return $this;
+    }
+
+    /**
+     * Produces the cartesian product of all the given arrays
+     *
+     * @return ArrayHelper $this
+     */
+    public function cartesianProduct()
+    {
+        $result = [];
+        $arrays = array_values($this->array);
+        $sizeIn = count($arrays);
+        $size = $sizeIn > 0 ? 1 : 0;
+        foreach ($arrays as $array) {
+            $size = $size * count($array);
+        }
+
+        for ($i = 0; $i < $size; $i ++) {
+            $result[$i] = [];
+
+            for ($j = 0; $j < $sizeIn; $j ++) {
+                array_push($result[$i], current($arrays[$j]));
+            }
+
+            for ($j = ($sizeIn - 1); $j >= 0; $j --) {
+                if (next($arrays[$j])) {
+                    break;
+                } elseif (isset($arrays[$j])) {
+                    reset($arrays[$j]);
+                }
+            }
+        }
+        $this->array = $result;
 
         return $this;
     }
