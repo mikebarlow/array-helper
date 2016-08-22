@@ -21,11 +21,13 @@
     "autoload": {
         "psr-4": {
             "Snscripts\\ArrayHelper\\": "src"
-        }
+        },
+        "classmap": ["src/ArrayUtil.php"]
     },
     "autoload-dev": {
         "psr-4": {
             "Snscripts\\ArrayHelper\\Tests\\": "tests"
-        }
+        },
+        "classmap": ["src/ArrayUtil.php"]
     }
 }

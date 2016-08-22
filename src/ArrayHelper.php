@@ -49,7 +49,6 @@ class ArrayHelper implements \ArrayAccess, \Iterator
     /**
      * clear an array of any empty elements
      *
-     * @param   array   Array to clear
      * @return ArrayHelper $this
      */
     public function clearArray()
