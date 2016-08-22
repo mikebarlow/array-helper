@@ -106,7 +106,7 @@ class ArrayUtil
      * @param array Array of Arrays to combine e.g. array( array('a', 'b'), array('1', '2') )
      * @return array Array of products e.g. array( array('a', '1'), array('a', '2'), array('b', '1'), array('b', '2'))
      */
-    public static function cartesianProduct($arrays)
+    public static function cartesianProduct($array)
     {
         $ArrayHelper = new ArrayHelper($array);
         $ArrayHelper->cartesianProduct();
