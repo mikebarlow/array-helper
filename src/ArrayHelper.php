@@ -81,13 +81,49 @@ class ArrayHelper implements \ArrayAccess, \Iterator
      */
     public function splitArray($sections)
     {
-        if (count($this->array) < $sections) {
-            $chunkSize = 1;
-        } else {
-            $chunkSize = ceil(count($this->array) / $sections);
-        }
+        $arrayCount = count($this->array);
+        $countLessSections = ($arrayCount < $sections);
+        $remainder = ($arrayCount % $sections);
 
-        $this->array = array_chunk($this->array, $chunkSize, true);
+        if ($countLessSections || $remainder === 0) {
+            if ($countLessSections) {
+                $chunkSize = 1;
+            } elseif ($remainder === 0) {
+                $chunkSize = $arrayCount / $sections;
+            }
+
+            $this->array = array_chunk($this->array, $chunkSize, true);
+        } else {
+            $result = [];
+            $chunkSize = ($arrayCount - $remainder) / $sections;
+            $start = 0;
+
+            // we're gonna have some columns with extra items
+            // above we calculate how big each element would be if equal
+            // and log remainders
+            // below we loop each section and check if there's any remainders left
+            // if so, increase the size by one, decrease the remainder count and get the items
+            for ($i = 1; $i <= $sections; $i++) {
+                $chunks = $chunkSize;
+                if ($remainder > 0) {
+                    $chunks++;
+                    $remainder--;
+                }
+
+                $result = array_merge(
+                    $result,
+                    [array_slice(
+                        $this->array,
+                        $start,
+                        $chunks,
+                        true
+                    )]
+                );
+                $start += $chunks;
+            }
+
+            $this->array = $result;
+        }
 
         return $this;
     }
