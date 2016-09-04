@@ -1,6 +1,8 @@
 <?php
 namespace Snscripts\ArrayHelper\Tests;
 
+use ArrayUtil;
+
 class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 {
     public function testClearArrayWrapper()
@@ -9,7 +11,7 @@ class ArrayUtilTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame(
             [1 => 'foo', 3 => 'bar', 4 => 'foobar', 5 => 'test'],
-            \ArrayUtil::clearArray($arr)
+            ArrayUtil::clearArray($arr)
         );
 
         $arr = [
@@ -26,7 +28,7 @@ class ArrayUtilTest extends \PHPUnit_Framework_TestCase
                     0 => 'hello', 2 => 'bye'
                 ]
             ],
-            \ArrayUtil::clearArray($arr)
+            ArrayUtil::clearArray($arr)
         );
     }
 
@@ -41,7 +43,7 @@ class ArrayUtilTest extends \PHPUnit_Framework_TestCase
                     1 => 'array'
                 ]
             ],
-            \ArrayUtil::splitArray(
+            ArrayUtil::splitArray(
                 ['small', 'array'],
                 3
             )
@@ -66,7 +68,7 @@ class ArrayUtilTest extends \PHPUnit_Framework_TestCase
                     7 => 'up'
                 ]
             ],
-            \ArrayUtil::splitArray(
+            ArrayUtil::splitArray(
                 ['this', 'is', 'a', 'big', 'array', 'to', 'split', 'up'],
                 4
             )
@@ -84,7 +86,7 @@ class ArrayUtilTest extends \PHPUnit_Framework_TestCase
                     4 => 'num'
                 ]
             ],
-            \ArrayUtil::splitArray(
+            ArrayUtil::splitArray(
                 ['this', 'array', 'has', 'odd', 'num'],
                 2
             )
@@ -106,11 +108,142 @@ class ArrayUtilTest extends \PHPUnit_Framework_TestCase
                     6 => 7
                 ]
             ],
-            \ArrayUtil::splitArray(
+            ArrayUtil::splitArray(
                 [1, 2, 3, 4, 5, 6, 7],
                 3
             )
         );
     }
 
+    public function testAddArrayWrapper()
+    {
+        $this->assertSame(
+            [
+                'a' => 'foo',
+                'c' => 'test',
+                'b' => 'bar'
+            ],
+            ArrayUtil::addAfter(
+                [
+                    'a' => 'foo',
+                    'b' => 'bar'
+                ],
+                'a',
+                [
+                    'c' => 'test'
+                ]
+            )
+        );
+    }
+
+    public function testGetOffsetByKeyReturnsOffsetPositionInArray()
+    {
+        $this->assertSame(
+            1,
+            ArrayUtil::getOffsetByKey(
+                [
+                    'a' => 'Alpha',
+                    'b' => 'Bravo',
+                    'c' => 'Charlie'
+                ],
+                'b'
+            )
+        );
+    }
+
+    public function testGetOffsetByKeyReturnsNullWhenNotFound()
+    {
+        $this->assertNull(
+            ArrayUtil::getOffsetByKey(
+                [
+                    'a' => 'Alpha',
+                    'b' => 'Bravo',
+                    'c' => 'Charlie'
+                ],
+                'd'
+            )
+        );
+    }
+
+    public function testGetOffsetByValueReturnsOffsetPositionInArray()
+    {
+        $this->assertSame(
+            2,
+            ArrayUtil::getOffsetByValue(
+                [
+                    'a' => 'Alpha',
+                    'b' => 'Bravo',
+                    'c' => 'Charlie'
+                ],
+                'Charlie'
+            )
+        );
+    }
+
+    public function testGetOffsetByValueReturnsNullWhenNotFound()
+    {
+        $this->assertNull(
+            ArrayUtil::getOffsetByValue(
+                [
+                    'a' => 'Alpha',
+                    'b' => 'Bravo',
+                    'c' => 'Charlie'
+                ],
+                'Delta'
+            )
+        );
+    }
+
+    public function testMoveItemMovesAnElementCorrectly()
+    {
+        $this->assertSame(
+            [
+                'a' => 'alpha',
+                'c' => 'charlie',
+                'b' => 'bravo'
+            ],
+            ArrayUtil::moveItem(
+                [
+                    'a' => 'alpha',
+                    'b' => 'bravo',
+                    'c' => 'charlie'
+                ],
+                'b',
+                'c'
+            )
+        );
+    }
+
+    public function testMoveItemThrowsExceptionWithInvalidItems()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        ArrayUtil::moveItem(
+            [
+                'a' => 'alpha',
+                'b' => 'bravo',
+                'c' => 'charlie'
+            ],
+            'e',
+            'f'
+        );
+    }
+
+    public function testCartesianProductProducesCorrectArray()
+    {
+        $this->assertSame(
+            [
+                ['S', 'Red'],
+                ['S', 'Blue'],
+                ['M', 'Red'],
+                ['M', 'Blue'],
+                ['L', 'Red'],
+                ['L', 'Blue']
+            ],
+            ArrayUtil::cartesianProduct([
+                ['S', 'M', 'L'],
+                ['Red', 'Blue']
+            ])
+        );
+    }
 }
