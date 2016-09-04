@@ -76,7 +76,8 @@ This method simply removes any elements from an array that are 'empty' as define
 
 This method is used to split your array into equal (or as close to) sections given the number of sections you want. PHP's `array_chunk` requires that you pass in the number of items for each section which isn't always possible. This method automatically works this out for you based on the number of items in the array and the number of sections you require.
 
-    // Split the array into number of sections in equals amounts (Some sections may have extra elements due to remainders)
+    // Split the array into number of sections in equals amounts
+    // (Some sections may have extra elements due to remainders)
     $ArrayHelper->splitArray(3);
 
 #### Example
@@ -164,7 +165,7 @@ This method allows you to move an item defined by it's element key and move it t
     ]
     */
 
-### cartesian()
+### cartesianProduct()
 
 This method will create a cartesian product version of the array by merging all the arrays to create all the possible combinations.
 
