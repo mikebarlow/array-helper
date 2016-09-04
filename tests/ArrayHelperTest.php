@@ -178,4 +178,221 @@ class ArrayHelperTest extends \PHPUnit_Framework_TestCase
             $ArrayHelper->output()
         );
     }
+
+    public function testAddAfterAddsElementCorrectly()
+    {
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'foo',
+            'b' => 'bar'
+        ]);
+        $ArrayHelper->addAfter(
+            'a',
+            [
+                'c' => 'test'
+            ]
+        );
+
+        $this->assertSame(
+            [
+                'a' => 'foo',
+                'c' => 'test',
+                'b' => 'bar'
+            ],
+            $ArrayHelper->output()
+        );
+    }
+
+    public function testMoveItemMovesAnElementCorrectly()
+    {
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'alpha',
+            'b' => 'bravo',
+            'c' => 'charlie'
+        ]);
+
+        $ArrayHelper->moveItem(
+            'b',
+            'c'
+        );
+
+        $this->assertSame(
+            [
+                'a' => 'alpha',
+                'c' => 'charlie',
+                'b' => 'bravo'
+            ],
+            $ArrayHelper->output()
+        );
+    }
+
+    public function testMoveItemThrowsExceptionWithInvalidItems()
+    {
+        $this->setExpectedException('InvalidArgumentException');
+
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'alpha',
+            'b' => 'bravo',
+            'c' => 'charlie'
+        ]);
+
+        $ArrayHelper->moveItem(
+            'e',
+            'f'
+        );
+    }
+
+    public function testCartesianProductProducesCorrectArray()
+    {
+        $ArrayHelper = new ArrayHelper([
+            ['S', 'M', 'L'],
+            ['Red', 'Blue']
+        ]);
+
+        $ArrayHelper->cartesianProduct();
+
+        $this->assertSame(
+            [
+                ['S', 'Red'],
+                ['S', 'Blue'],
+                ['M', 'Red'],
+                ['M', 'Blue'],
+                ['L', 'Red'],
+                ['L', 'Blue']
+            ],
+            $ArrayHelper->output()
+        );
+    }
+
+    public function testGetOffsetByKeyReturnsOffsetPositionInArray()
+    {
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'Alpha',
+            'b' => 'Bravo',
+            'c' => 'Charlie'
+        ]);
+
+        $this->assertSame(
+            1,
+            $ArrayHelper->getOffsetByKey('b')
+        );
+    }
+
+    public function testGetOffsetByKeyReturnsNullWhenNotFound()
+    {
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'Alpha',
+            'b' => 'Bravo',
+            'c' => 'Charlie'
+        ]);
+
+        $this->assertNull(
+            $ArrayHelper->getOffsetByKey('d')
+        );
+    }
+
+    public function testGetOffsetByValueReturnsOffsetPositionInArray()
+    {
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'Alpha',
+            'b' => 'Bravo',
+            'c' => 'Charlie'
+        ]);
+
+        $this->assertSame(
+            2,
+            $ArrayHelper->getOffsetByValue('Charlie')
+        );
+    }
+
+    public function testGetOffsetByValueReturnsNullWhenNotFound()
+    {
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'Alpha',
+            'b' => 'Bravo',
+            'c' => 'Charlie'
+        ]);
+
+        $this->assertNull(
+            $ArrayHelper->getOffsetByValue('Delta')
+        );
+    }
+
+    public function testArrayableInterfaceMethods()
+    {
+        $ArrayHelper = new ArrayHelper([]);
+        $ArrayHelper['foo'] = 'bar';
+        $ArrayHelper[] = 'test';
+
+        $this->assertSame(
+            [
+                'foo' => 'bar',
+                0 => 'test'
+            ],
+            $ArrayHelper->output()
+        );
+
+        $ArrayHelper['fizz'] = 'buzz';
+
+        $this->assertTrue(
+            isset($ArrayHelper['fizz'])
+        );
+
+        unset($ArrayHelper['foo']);
+        $this->assertSame(
+            [
+                0 => 'test',
+                'fizz' => 'buzz'
+            ],
+            $ArrayHelper->output()
+        );
+
+        $this->assertSame(
+            'buzz',
+            $ArrayHelper['fizz']
+        );
+    }
+
+    public function testIteratorInterfaceMethods()
+    {
+        $ArrayHelper = new ArrayHelper([
+            'a' => 'Alpha',
+            'b' => 'Bravo',
+            'c' => 'Charlie',
+            'd' => 'Delta'
+        ]);
+
+        $this->assertSame(
+            'Alpha',
+            $ArrayHelper->rewind()
+        );
+
+        $ArrayHelper->next();
+
+        $this->assertSame(
+            'Bravo',
+            $ArrayHelper->current()
+        );
+
+        $this->assertSame(
+            'b',
+            $ArrayHelper->key()
+        );
+
+        $this->assertSame(
+            'Charlie',
+            $ArrayHelper->next()
+        );
+
+        $this->assertTrue(
+            $ArrayHelper->valid()
+        );
+
+        $ArrayHelper->next();
+        $ArrayHelper->next();
+
+        $this->assertFalse(
+            $ArrayHelper->valid()
+        );
+    }
+
 }
