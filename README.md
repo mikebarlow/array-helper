@@ -1,6 +1,6 @@
 # Framework Agnostic Array-Helper
 
-[![Author](http://img.shields.io/badge/author-@mikebarlow-red.svg?style=flat-square)](https://twitter.com/mikebarlow)
+[![Author](http://img.shields.io/badge/author-@mikebarlow-blue.svg?style=flat-square)](https://twitter.com/mikebarlow)
 [![Source Code](http://img.shields.io/badge/source-snscripts/array--helper-brightgreen.svg?style=flat-square)](https://github.com/snscripts/array-helper)
 [![Latest Version](https://img.shields.io/github/release/snscripts/array-helper.svg?style=flat-square)](https://github.com/snscripts/array-helper/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/snscripts/array-helper/blob/master/LICENSE)
