@@ -2,7 +2,7 @@
     "name": "snscripts/array-helper",
     "description": "Framework agnostic Array Helper",
     "keywords": ["Array", "Helper", "Framework Agnostic"],
-    "homepage": "https://github.com/snscripts/array-helper",
+    "homepage": "https://github.com/mikebarlow/array-helper",
     "license": "MIT",
     "authors": [
         {
