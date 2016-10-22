@@ -1,10 +1,10 @@
 # Framework Agnostic Array-Helper
 
 [![Author](http://img.shields.io/badge/author-@mikebarlow-red.svg?style=flat-square)](https://twitter.com/mikebarlow)
-[![Source Code](http://img.shields.io/badge/source-snscripts/array--helper-brightgreen.svg?style=flat-square)](https://github.com/snscripts/array-helper)
-[![Latest Version](https://img.shields.io/github/release/snscripts/array-helper.svg?style=flat-square)](https://github.com/snscripts/array-helper/releases)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/snscripts/array-helper/blob/master/LICENSE)
-[![Build Status](https://img.shields.io/travis/snscripts/array-helper/master.svg?style=flat-square)](https://travis-ci.org/snscripts/array-helper)
+[![Source Code](http://img.shields.io/badge/source-snscripts/array--helper-brightgreen.svg?style=flat-square)](https://github.com/mikebarlow/array-helper)
+[![Latest Version](https://img.shields.io/github/release/mikebarlow/array-helper.svg?style=flat-square)](https://github.com/mikebarlow/array-helper/releases)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](https://github.com/mikebarlow/array-helper/blob/master/LICENSE)
+[![Build Status](https://img.shields.io/travis/mikebarlow/array-helper/master.svg?style=flat-square)](https://travis-ci.org/mikebarlow/array-helper)
 
 ## Introduction
 
@@ -14,7 +14,7 @@ This Array Helper is a PSR-2 Compliant Framework Agnostic helper designed for he
 
 ### Composer
 
-HTML Helper requires the following:
+Array Helper requires the following:
 
 * "php": ">=5.4.0"
 
